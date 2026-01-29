@@ -1,0 +1,20 @@
+{
+  "database": ".pack-sentinel/demo.db",
+  "bind": "127.0.0.1",
+  "port": 7331,
+  "retentionDays": 7,
+  "dedupeWindowSeconds": 30,
+  "maxConcurrentCollectors": 2,
+  "collectors": [
+    {
+      "id": "demo-host",
+      "command": "node",
+      "args": ["fixtures/demo-collector.mjs"],
+      "adapter": "generic",
+      "enabled": true,
+      "intervalSeconds": 60,
+      "timeoutSeconds": 5
+    }
+  ],
+  "webhooks": []
+}
