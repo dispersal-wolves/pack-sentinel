@@ -1,0 +1,29 @@
+{
+  "database": ".pack-sentinel/pack-sentinel.db",
+  "bind": "127.0.0.1",
+  "port": 7331,
+  "retentionDays": 30,
+  "dedupeWindowSeconds": 300,
+  "maxConcurrentCollectors": 2,
+  "collectors": [
+    {
+      "id": "host-check",
+      "command": "python",
+      "args": ["../host-check/src/host_check.py", "--format", "json"],
+      "adapter": "host-check",
+      "enabled": true,
+      "intervalSeconds": 900,
+      "timeoutSeconds": 30
+    },
+    {
+      "id": "open-ports",
+      "command": "../open-ports/target/release/open-ports",
+      "args": ["scan", "--format", "json"],
+      "adapter": "open-ports",
+      "enabled": false,
+      "intervalSeconds": 300,
+      "timeoutSeconds": 15
+    }
+  ],
+  "webhooks": []
+}
