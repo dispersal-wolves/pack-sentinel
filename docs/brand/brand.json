@@ -1,0 +1,13 @@
+{
+  "name": "Dispersal Wolves",
+  "tagline": "Defensive utilities for Linux hosts.",
+  "mark": "Walking Wolf",
+  "palette": {
+    "blackFir": "#071310",
+    "pitchPine": "#10231F",
+    "lichen": "#41645D",
+    "coldFog": "#9CAAA6",
+    "bone": "#E8E8DF",
+    "paper": "#D4D8D0"
+  }
+}
