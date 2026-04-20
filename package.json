@@ -1,0 +1,17 @@
+{
+  "name": "pack-sentinel",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "A local security operations server for Dispersal Wolves utilities.",
+  "engines": { "node": ">=24.0.0" },
+  "scripts": {
+    "start": "node --experimental-strip-types src/main.ts serve",
+    "dev": "node --watch --experimental-strip-types src/main.ts serve",
+    "check": "node --experimental-strip-types scripts/check.ts",
+    "lint": "node scripts/lint.mjs",
+    "test": "node --experimental-strip-types --test --test-concurrency=1 test/*.test.ts",
+    "qa": "npm run lint && npm run check && npm test"
+  },
+  "license": "MIT"
+}
