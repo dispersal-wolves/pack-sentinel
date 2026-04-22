@@ -1,0 +1,20 @@
+[Unit]
+Description=Pack Sentinel local security operations
+After=network.target
+
+[Service]
+Type=simple
+User=pack-sentinel
+Group=pack-sentinel
+WorkingDirectory=/opt/pack-sentinel
+ExecStart=/usr/bin/node --experimental-strip-types /opt/pack-sentinel/src/main.ts serve --config /etc/pack-sentinel/config.json
+Restart=on-failure
+RestartSec=5
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectSystem=strict
+ProtectHome=true
+ReadWritePaths=/var/lib/pack-sentinel
+
+[Install]
+WantedBy=multi-user.target
