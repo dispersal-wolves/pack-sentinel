@@ -1,0 +1,22 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://dispersalwolves.com/schemas/pack-sentinel/generic-finding-v1.json",
+  "title": "Generic collector output",
+  "type": "object",
+  "required": ["findings"],
+  "properties": {
+    "schema": { "type": "string" },
+    "findings": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["kind", "title", "severity"],
+        "properties": {
+          "kind": { "type": "string" }, "title": { "type": "string" },
+          "summary": { "type": "string" }, "detail": { "type": "string" },
+          "severity": { "enum": ["info", "low", "medium", "high", "critical"] }
+        }
+      }
+    }
+  }
+}
