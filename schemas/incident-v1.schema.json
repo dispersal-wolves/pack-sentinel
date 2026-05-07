@@ -1,0 +1,23 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://dispersalwolves.com/schemas/pack-sentinel/incident-v1.json",
+  "title": "Pack Sentinel incident",
+  "type": "object",
+  "required": ["id", "key", "title", "summary", "severity", "status", "host", "ruleId", "signalIds", "createdAt", "updatedAt"],
+  "properties": {
+    "id": { "type": "string", "format": "uuid" },
+    "key": { "type": "string" },
+    "title": { "type": "string" },
+    "summary": { "type": "string" },
+    "severity": { "enum": ["info", "low", "medium", "high", "critical"] },
+    "status": { "enum": ["open", "acknowledged", "resolved", "suppressed"] },
+    "host": { "type": "string" },
+    "ruleId": { "type": "string" },
+    "signalIds": { "type": "array", "items": { "type": "string", "format": "uuid" } },
+    "createdAt": { "type": "string", "format": "date-time" },
+    "updatedAt": { "type": "string", "format": "date-time" },
+    "acknowledgedAt": { "type": "string", "format": "date-time" },
+    "resolvedAt": { "type": "string", "format": "date-time" }
+  },
+  "additionalProperties": false
+}
