@@ -1,0 +1,22 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://dispersalwolves.com/schemas/pack-sentinel/signal-v1.json",
+  "title": "Pack Sentinel signal",
+  "type": "object",
+  "required": ["id", "source", "kind", "title", "summary", "severity", "host", "observedAt", "receivedAt", "fingerprint"],
+  "properties": {
+    "id": { "type": "string", "format": "uuid" },
+    "source": { "type": "string", "minLength": 1 },
+    "kind": { "type": "string", "minLength": 1 },
+    "title": { "type": "string", "minLength": 1 },
+    "summary": { "type": "string" },
+    "severity": { "enum": ["info", "low", "medium", "high", "critical"] },
+    "host": { "type": "string", "minLength": 1 },
+    "evidence": { "type": "object" },
+    "tags": { "type": "array", "items": { "type": "string" }, "uniqueItems": true },
+    "observedAt": { "type": "string", "format": "date-time" },
+    "receivedAt": { "type": "string", "format": "date-time" },
+    "fingerprint": { "type": "string", "minLength": 1 }
+  },
+  "additionalProperties": false
+}
