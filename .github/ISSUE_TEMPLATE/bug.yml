@@ -1,0 +1,15 @@
+name: Bug report
+description: Report reproducible incorrect behavior
+body:
+  - type: input
+    id: version
+    attributes: { label: Version }
+    validations: { required: true }
+  - type: textarea
+    id: reproduction
+    attributes: { label: Reproduction, description: Remove host names, credentials, and private findings. }
+    validations: { required: true }
+  - type: textarea
+    id: expected
+    attributes: { label: Expected behavior }
+    validations: { required: true }
