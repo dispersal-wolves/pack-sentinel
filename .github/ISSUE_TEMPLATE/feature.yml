@@ -1,0 +1,11 @@
+name: Feature proposal
+description: Propose a bounded addition to Pack Sentinel
+body:
+  - type: textarea
+    id: problem
+    attributes: { label: Operational problem }
+    validations: { required: true }
+  - type: textarea
+    id: boundary
+    attributes: { label: Suggested boundary, description: Explain what remains outside the proposal. }
+    validations: { required: true }
