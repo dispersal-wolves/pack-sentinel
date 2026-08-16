@@ -1,0 +1,1 @@
+{"database":"/var/lib/pack-sentinel/pack-sentinel.db","bind":"0.0.0.0","port":7331,"apiToken":"replace-with-a-long-random-value","retentionDays":30,"dedupeWindowSeconds":300,"maxConcurrentCollectors":2,"collectors":[],"webhooks":[]}
