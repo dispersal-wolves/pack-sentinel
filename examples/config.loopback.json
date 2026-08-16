@@ -1,0 +1,1 @@
+{"database":".pack-sentinel/local.db","bind":"127.0.0.1","port":7331,"retentionDays":30,"dedupeWindowSeconds":300,"maxConcurrentCollectors":1,"collectors":[{"id":"example","command":"node","args":["examples/generic-collector.mjs"],"adapter":"generic","enabled":true,"intervalSeconds":300,"timeoutSeconds":5}],"webhooks":[]}
