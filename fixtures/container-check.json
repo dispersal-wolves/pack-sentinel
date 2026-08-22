@@ -1,0 +1,1 @@
+{"schema":"dispersal-wolves/container-check/v1","findings":[{"kind":"container.privileged","title":"Privileged demo container","detail":"The demo service requests privileged mode.","severity":"high"}]}
