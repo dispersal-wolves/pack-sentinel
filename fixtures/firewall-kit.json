@@ -1,0 +1,1 @@
+{"findings":[{"kind":"firewall.drift","title":"Firewall policy drift","detail":"The active demo rules differ from the rendered profile.","severity":"high"}]}
