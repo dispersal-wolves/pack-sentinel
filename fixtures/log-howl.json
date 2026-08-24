@@ -1,0 +1,1 @@
+{"findings":[{"kind":"auth.repeated-failure","title":"Repeated demo authentication failures","detail":"The fixture contains five failures in one minute.","severity":"medium"}]}
