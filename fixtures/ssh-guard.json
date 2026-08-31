@@ -1,0 +1,1 @@
+{"findings":[{"kind":"ssh.password-authentication","title":"Password authentication enabled","detail":"The demo daemon permits password authentication.","severity":"medium"}]}
