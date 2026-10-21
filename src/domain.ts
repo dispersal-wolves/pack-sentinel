@@ -85,7 +85,7 @@ export function makeSignal(input: SignalInput, now = new Date()): Signal {
     observedAt: input.observedAt ?? iso,
     receivedAt: iso,
     host: input.host?.trim() || 'localhost',
-    evidence: input.evidence ?? {},
+    evidence: redact(input.evidence ?? {}) as Record<string, unknown>,
     tags: [...new Set(input.tags ?? [])].sort(),
     fingerprint: stableFingerprint(input),
   };
