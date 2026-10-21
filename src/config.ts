@@ -1,5 +1,6 @@
 import { readFileSync } from 'node:fs';
 import { resolve } from 'node:path';
+import { isSeverity, type Severity } from './domain.ts';
 
 export interface CollectorConfig {
   id: string;
@@ -22,7 +23,7 @@ export interface AppConfig {
   dedupeWindowSeconds: number;
   maxConcurrentCollectors: number;
   collectors: CollectorConfig[];
-  webhooks: Array<{ id: string; url: string; minimumSeverity: string }>;
+  webhooks: Array<{ id: string; url: string; minimumSeverity: Severity }>;
 }
 
 export const defaultConfig: AppConfig = {
@@ -51,6 +52,17 @@ export function loadConfig(path?: string): AppConfig {
     if (collector.intervalSeconds < 5) throw new Error(`collector ${collector.id} interval must be at least 5 seconds`);
     if (collector.timeoutSeconds < 1) throw new Error(`collector ${collector.id} timeout must be positive`);
     ids.add(collector.id);
+  }
+  if (!Array.isArray(config.webhooks)) throw new Error('webhooks must be an array');
+  const webhookIds = new Set<string>();
+  for (const webhook of config.webhooks) {
+    if (!webhook.id || webhookIds.has(webhook.id)) throw new Error(`webhook id is missing or duplicated: ${webhook.id}`);
+    let url: URL;
+    try { url = new URL(webhook.url); } catch { throw new Error(`webhook ${webhook.id} has an invalid url`); }
+    if (url.protocol !== 'https:' && url.hostname !== '127.0.0.1' && url.hostname !== 'localhost') throw new Error(`webhook ${webhook.id} must use HTTPS outside loopback`);
+    webhook.minimumSeverity ??= 'medium';
+    if (!isSeverity(webhook.minimumSeverity)) throw new Error(`webhook ${webhook.id} minimumSeverity must be one of info, low, medium, high, critical`);
+    webhookIds.add(webhook.id);
   }
   if (config.bind !== '127.0.0.1' && config.bind !== '::1' && !config.apiToken) {
     throw new Error('an API token is required when binding beyond loopback');

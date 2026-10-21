@@ -81,7 +81,8 @@ export class Store {
     }));
   }
 
-  upsertIncident(incident: Incident): void {
+  upsertIncident(incident: Incident): boolean {
+    const existed = Boolean(this.db.prepare('SELECT 1 FROM incidents WHERE incident_key=?').get(incident.key));
     this.db.prepare(`INSERT INTO incidents
       (id,incident_key,title,summary,severity,status,host,rule_id,signal_ids_json,created_at,updated_at,acknowledged_at,resolved_at)
       VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?) ON CONFLICT(incident_key) DO UPDATE SET
@@ -90,6 +91,7 @@ export class Store {
         incident.id, incident.key, incident.title, incident.summary, incident.severity, incident.status,
         incident.host, incident.ruleId, JSON.stringify(incident.signalIds), incident.createdAt, incident.updatedAt,
         incident.acknowledgedAt ?? null, incident.resolvedAt ?? null);
+    return !existed;
   }
 
   listIncidents(limit = 100, status?: string): Incident[] {

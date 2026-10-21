@@ -13,3 +13,5 @@ test('duplicate collector ids fail validation', () => withConfig({ collectors: [
   {id:'a',command:'x',args:[],adapter:'generic',enabled:true,intervalSeconds:5,timeoutSeconds:1},
   {id:'a',command:'x',args:[],adapter:'generic',enabled:true,intervalSeconds:5,timeoutSeconds:1}
 ] }, path => assert.throws(() => loadConfig(path), /duplicated/)));
+test('plain HTTP webhooks outside loopback fail validation', () => withConfig({ webhooks: [{ id:'remote', url:'http://example.com/hook', minimumSeverity:'high' }] }, path => assert.throws(() => loadConfig(path), /HTTPS/)));
+test('webhook severity must be known', () => withConfig({ webhooks: [{ id:'local', url:'https://example.com/hook', minimumSeverity:'urgent' }] }, path => assert.throws(() => loadConfig(path), /minimumSeverity/)));
