@@ -1,8 +1,10 @@
 import type { AppConfig, CollectorConfig } from './config.ts';
+import type { Incident } from './domain.ts';
 import { makeSignal } from './domain.ts';
 import { correlate } from './correlation.ts';
 import { runCollector } from './collector.ts';
 import { Store } from './store.ts';
+import { deliverWebhook } from './webhooks.ts';
 
 export class Engine {
   private running = new Set<string>();
@@ -14,6 +16,18 @@ export class Engine {
   constructor(config: AppConfig, store: Store) {
     this.config = config;
     this.store = store;
+  }
+
+  private async notify(incidents: Incident[]): Promise<void> {
+    const deliveries = incidents.flatMap(incident => this.config.webhooks.map(async webhook => {
+      try {
+        const result = await deliverWebhook(webhook.url, incident, webhook.minimumSeverity);
+        if (result.status) this.store.audit('system', result.ok ? 'webhook.delivered' : 'webhook.failed', incident.id, { webhook: webhook.id, status: result.status });
+      } catch (error) {
+        this.store.audit('system', 'webhook.failed', incident.id, { webhook: webhook.id, error: error instanceof Error ? error.message : String(error) });
+      }
+    }));
+    await Promise.all(deliveries);
   }
 
   async runOne(collector: CollectorConfig): Promise<{accepted:number;error?:string}> {
@@ -31,7 +45,8 @@ export class Engine {
         if (this.store.hasRecentFingerprint(signal.fingerprint, since)) continue;
         if (this.store.insertSignal(signal)) accepted += 1;
       }
-      for (const incident of correlate(this.store.listSignals(500))) this.store.upsertIncident(incident);
+      const opened = correlate(this.store.listSignals(500)).filter(incident => this.store.upsertIncident(incident));
+      await this.notify(opened);
       return { accepted };
     } finally { this.running.delete(collector.id); }
   }

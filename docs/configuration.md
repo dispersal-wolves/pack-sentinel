@@ -11,6 +11,7 @@ Configuration is a JSON document. Start from `config/example.json`.
 | `retentionDays` | `30` | Age at which unreferenced signals can be pruned |
 | `dedupeWindowSeconds` | `300` | Time during which matching fingerprints are ignored |
 | `maxConcurrentCollectors` | `2` | Maximum active child processes |
+| `webhooks` | `[]` | Incident notifications; see [webhooks](webhooks.md) |
 
 Each collector defines an identifier, executable, argument array, adapter, interval, timeout, and optional working directory or environment additions. Commands are never interpreted by a shell.
 
